@@ -18,10 +18,10 @@ namespace UnityEngine.ResourceManagement.Profiling
         public const int kAssetDataTag = 2;
         public const int kSceneDataTag = 3;
 
-        private static ProfilerCounterValue<int> CatalogLoadCounter = new ProfilerCounterValue<int>(ProfilerCategory.Loading, "Catalogs", ProfilerMarkerDataUnit.Count);
-        private static ProfilerCounterValue<int> AssetBundleLoadCounter = new ProfilerCounterValue<int>(ProfilerCategory.Loading, "Asset Bundles", ProfilerMarkerDataUnit.Count);
-        private static ProfilerCounterValue<int> AssetLoadCounter = new ProfilerCounterValue<int>(ProfilerCategory.Loading, "Assets", ProfilerMarkerDataUnit.Count);
-        private static ProfilerCounterValue<int> SceneLoadCounter = new ProfilerCounterValue<int>(ProfilerCategory.Loading, "Scenes", ProfilerMarkerDataUnit.Count);
+        //private static ProfilerCounterValue<int> CatalogLoadCounter = new ProfilerCounterValue<int>(ProfilerCategory.Loading, "Catalogs", ProfilerMarkerDataUnit.Count);
+        //private static ProfilerCounterValue<int> AssetBundleLoadCounter = new ProfilerCounterValue<int>(ProfilerCategory.Loading, "Asset Bundles", ProfilerMarkerDataUnit.Count);
+        //private static ProfilerCounterValue<int> AssetLoadCounter = new ProfilerCounterValue<int>(ProfilerCategory.Loading, "Assets", ProfilerMarkerDataUnit.Count);
+        //private static ProfilerCounterValue<int> SceneLoadCounter = new ProfilerCounterValue<int>(ProfilerCategory.Loading, "Scenes", ProfilerMarkerDataUnit.Count);
 
         private static ProfilerFrameData<Hash128, CatalogFrameData> m_CatalogData = new ProfilerFrameData<Hash128, CatalogFrameData>(4);
         private static ProfilerFrameData<IAsyncOperation, BundleFrameData> m_BundleData = new ProfilerFrameData<IAsyncOperation, BundleFrameData>(64);
@@ -34,10 +34,10 @@ namespace UnityEngine.ResourceManagement.Profiling
 
         public static void Initialise()
         {
-            CatalogLoadCounter.Value = 0;
-            AssetBundleLoadCounter.Value = 0;
-            AssetLoadCounter.Value = 0;
-            SceneLoadCounter.Value = 0;
+            //CatalogLoadCounter.Value = 0;
+            //AssetBundleLoadCounter.Value = 0;
+            //AssetLoadCounter.Value = 0;
+            //SceneLoadCounter.Value = 0;
 
             MonoBehaviourCallbackHooks.Instance.OnLateUpdateDelegate += InstanceOnOnLateUpdateDelegate;
         }
@@ -53,7 +53,7 @@ namespace UnityEngine.ResourceManagement.Profiling
                 return;
 
             m_CatalogData.Add(buildHash, new CatalogFrameData(){BuildResultHash = buildHash});
-            CatalogLoadCounter.Value++;
+            //CatalogLoadCounter.Value++;
         }
 
         public static void AddBundleOperation(ProvideHandle handle, [NotNull] AssetBundleRequestOptions requestOptions, ContentStatus status, BundleSource source)
@@ -86,8 +86,8 @@ namespace UnityEngine.ResourceManagement.Profiling
             };
 
             m_BundleData.Add(op, data);
-            if (!m_BundleNameToOperation.ContainsKey(bundleName))
-                AssetBundleLoadCounter.Value += 1;
+            //if (!m_BundleNameToOperation.ContainsKey(bundleName))
+                //AssetBundleLoadCounter.Value += 1;
             m_BundleNameToOperation[bundleName] = op;
         }
 
@@ -98,7 +98,7 @@ namespace UnityEngine.ResourceManagement.Profiling
 
             m_BundleData.Remove(op);
             m_BundleNameToOperation.Remove(bundleName);
-            AssetBundleLoadCounter.Value -= 1;
+            //AssetBundleLoadCounter.Value -= 1;
 
             // remove all the assets from the bundle
             if (m_BundleNameToAssetOperations.TryGetValue(bundleName, out var assetOps))
@@ -106,7 +106,7 @@ namespace UnityEngine.ResourceManagement.Profiling
                 m_BundleNameToAssetOperations.Remove(bundleName);
                 foreach (IAsyncOperation assetOp in assetOps)
                 {
-                    AssetLoadCounter.Value -= 1;
+                    //AssetLoadCounter.Value -= 1;
                     m_AssetData.Remove(assetOp);
                 }
             }
@@ -145,8 +145,8 @@ namespace UnityEngine.ResourceManagement.Profiling
             else
                 m_BundleNameToAssetOperations.Add(containingBundleName, new List<IAsyncOperation>(){assetLoadOperation});
 
-            if (m_AssetData.Add(assetLoadOperation, profileObject))
-                AssetLoadCounter.Value += 1;
+            //if (m_AssetData.Add(assetLoadOperation, profileObject))
+                //AssetLoadCounter.Value += 1;
         }
 
         private static string GetContainingBundleNameForLocation(IResourceLocation location)
@@ -180,13 +180,13 @@ namespace UnityEngine.ResourceManagement.Profiling
             profileObject.BundleCode = containingBundleName.GetHashCode();
             profileObject.Status = status;
 
-            if (m_SceneData.Add(sceneLoadOperation, profileObject))
-                SceneLoadCounter.Value += 1;
+            //if (m_SceneData.Add(sceneLoadOperation, profileObject))
+                //SceneLoadCounter.Value += 1;
         }
 
         public static void SceneReleased(AsyncOperationHandle<SceneInstance> handle)
         {
-            if (handle.InternalOp is ChainOperationTypelessDepedency<SceneInstance> chainOp)
+            /*if (handle.InternalOp is ChainOperationTypelessDepedency<SceneInstance> chainOp)
             {
                 if (m_SceneData.Remove(chainOp.WrappedOp.InternalOp))
                     SceneLoadCounter.Value -= 1;
@@ -199,7 +199,7 @@ namespace UnityEngine.ResourceManagement.Profiling
                     SceneLoadCounter.Value -= 1;
                 else
                     Debug.LogWarning($"Failed to remove scene from Addressables profiler for " + handle.DebugName);
-            }
+            }*/
         }
 
         private static void PushToProfilerStream()
