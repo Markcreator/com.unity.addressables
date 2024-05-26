@@ -348,7 +348,7 @@ namespace AddressableAssetsIntegrationTests
 
                 InvalidKeyException expectedEx = new InvalidKeyException(keys, typeof(GameObject));
                 string message = handle.OperationException.Message;
-                string types = "Types=System.String, System.Int32";
+                //string types = "Types=System.String, System.Int32";
                 string expected = expectedEx.FormatMessage(InvalidKeyException.Format.MultipleTypesRequested);
 
                 bool equalOne = message == expected;

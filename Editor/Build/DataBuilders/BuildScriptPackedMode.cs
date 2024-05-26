@@ -19,7 +19,7 @@ using UnityEngine.AddressableAssets.ResourceProviders;
 using UnityEngine.Build.Pipeline;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.ResourceManagement.Util;
-using UnityEditor.AddressableAssets.BuildReportVisualizer;
+//using UnityEditor.AddressableAssets.BuildReportVisualizer;
 
 using static UnityEditor.AddressableAssets.Build.ContentUpdateScript;
 
@@ -104,10 +104,10 @@ namespace UnityEditor.AddressableAssets.Build.DataBuilders
                     ContentUpdateScript.ClearContentUpdateNotifications(group);
             }
 
-            if (result != null && !Application.isBatchMode && ProjectConfigData.AutoOpenAddressablesReport && ProjectConfigData.GenerateBuildLayout)
-            {
-                BuildReportWindow.ShowWindowAfterBuild();
-            }
+            //if (result != null && !Application.isBatchMode && ProjectConfigData.AutoOpenAddressablesReport && ProjectConfigData.GenerateBuildLayout)
+            //{
+            //    BuildReportWindow.ShowWindowAfterBuild();
+            //}
 
             return result;
         }
