@@ -51,7 +51,7 @@
 
 .link-icon {
     margin-right: 4px;
-    background-image: url('project://database/Packages/com.unity.addressables/Editor/Icons/white_help@2x.png?fileID=2800000&guid=2a1c92f384e631d4c95ab63b4d466677&type=3#white_help@2x');
+    background-image: url('project://database/Assets/Markcreator/SkinEdit/Packages/com.unity.addressables/Editor/Icons/white_help@2x.png?fileID=2800000&guid=2a1c92f384e631d4c95ab63b4d466677&type=3#white_help@2x');
     -unity-background-image-tint-color: rgb(58, 114, 176);
     color: rgb(58, 114, 176);
     min-width: 14px;
